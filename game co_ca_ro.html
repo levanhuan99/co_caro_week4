@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        td{
+            width: 35px;
+            height: 15px;
+        }
+
+    </style>
+
+</head>
+<body onclick="checkWin(arr)">
+<!--<h2>this is my caro</h2>-->
+<div id="caro"></div>
+<script>
+    let flag=true;
+    let arr= new Array(' ');
+    let DrawCaro = function (rows,cols) {
+
+        this.rows=rows;
+        this.cols=cols;
+        this.drawTable= function () {
+
+            table = '<table width="350px" height="350px"  border="1" cellspacing="0" cellpadding="0"  style="position: absolute;">';
+            for (let i=0;i<this.rows;i++){
+                table+="<tr>";
+                for (let j=0;j<this.cols;j++){
+                    table+="<td onclick='fillCell(this)' id='"+i+","+j+"'  align='center' ></td>";
+                }
+                table+="</tr>";
+            }
+            table+="</table>";
+            document.getElementById("caro").innerHTML=table;
+        }
+    }
+    let caroField=new DrawCaro(20,20);
+    caroField.drawTable();
+    function fillCell(cell) {
+        if (flag) {
+            cell.innerHTML = "x";
+            flag = false;
+            console.log(cell);
+
+        } else {
+            cell.innerHTML = "o";
+            flag = true;
+            console.log(cell);
+
+        }
+        for (i = 0; i < 20; i++) {
+            arr[i]= new Array('');
+            for (j = 0; j < 20; j++) {
+                arr[i][j]=document.getElementById(i+','+j).innerHTML;
+            }
+        }
+        console.log(arr);
+
+    }
+    function checkWin(ar) {
+        let flag1=false;
+        let flag2=false;
+        let x="x";
+        let o="o";
+        for (let i=0; i<20; i++) {
+            for (let j = 0; j < 20; j++) {
+
+                if (ar[i][j] === x && ar[i][j+1] === x && ar[i][j + 2] === x && ar[i][j + 3] === x && ar[i][j + 4] === x) {
+                    flag1 = true;
+                } else if (ar[i][j] === x && ar[i+1][j] === x && ar[i + 2][j] === x && ar[i + 3][j] === x && ar[i + 4][j] === x) {
+                    flag1 = true;
+                } else if (ar[i][j] === x && ar[i+1][j++] === x && ar[i + 2][j + 2] === x && ar[i + 3][j + 3] === x && ar[i + 4][j + 4] === x) {
+                    flag1 = true;
+                } else if (ar[i][j] === o && ar[i+1][j++] === o && ar[i + 2][j + 2] === o && ar[i + 3][j + 3] === o && ar[i + 4][j + 4] === o) {
+                    flag2 = true;
+                } else if (ar[i][j] === o && ar[i+1][j] === o && ar[i + 2][j] === o && ar[i + 3][j] === o && ar[i + 4][j] === o) {
+                    flag2 = true;
+                } else if (ar[i][j] === o && ar[i][j++] === o && ar[i][j + 2] === o && ar[i][j + 3] === o && ar[i][j + 4] === o) {
+                    flag2 = true;
+                }
+            }
+        }
+        if (flag1===true){
+            alert("x win");
+            caroField.drawTable();
+        }else if (flag2===true){
+            alert("o win ");
+            caroField.drawTable();
+        }
+    }
+</script>
+
+</body>
+
+
+</html>
